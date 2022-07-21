@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PlayRequest;
 use App\Models\Play;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlayController extends Controller
 {
@@ -33,11 +35,16 @@ class PlayController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlayRequest $request)
     {
         //
-        dump($request->all());
-        $partida = new Play();
+        // dump($request->all());
+        // $partida = new Play();
+        // $partida->user_id = Auth::user();
+        // $partida::create($request->validated());
+        $request->user_id = Auth::id();
+        Play::create($request->validated());
+        
     }
 
     /**

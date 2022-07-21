@@ -133,7 +133,10 @@ let contarAcierto = document.getElementById("aciertos");
 
 function cartasRestantes() {
   let aciertosMaximos = cantidadCartas / 2;
-  let estado = null;
+  let estado = 'gano';
+  let tiempo = 'asd';
+  let tiempo_utilizado = 'asd';
+  let dificultad = 'asd';
 
   Math.round(aciertosMaximos * (79 / 100));
 
@@ -146,11 +149,13 @@ function cartasRestantes() {
 
     axios.post("/play",{
         estado,
-        cantidad_cartas: cantidadCartas,
-        tipo_cartas: tipoCartas,
+        dificultad,
         aciertos,
         tiempo,
+        cantidad_cartas: cantidadCartas,
+        tipo_cartas: tipoCartas,
         tiempo_utilizado,
+        intentos,
     })
         .then(resp=>{
             console.log(resp);
