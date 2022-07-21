@@ -5,8 +5,12 @@ let intentosMaximos = 0;
 let movimientos = 0;
 let cantidadCartas = 0;
 
+let duracionPartidaInicial = null;
+let tipoCartas = null;
+
 function carcarIconos() {
-  if (document.getElementById("tipoCartas").value == "ajedrez") {
+    tipoCartas = document.getElementById("tipoCartas").value
+  if (tipoCartas == "ajedrez") {
     iconos = [
       '<i class="fa-solid fa-chess-king"></i>',
       '<i class="fa-solid fa-chess-queen"></i>',
@@ -74,7 +78,7 @@ function generarTablero() {
   for (let index = 0; index < cantidadCartas; index++) {
     tarjetas.push(`
     <div class="contenedorTarjeta conteiner">
-        <div class="tarjeta conteiner" id="tarjeta${index}" onclick="seleccionar(${index})">
+        <div class="tarjeta" id="tarjeta${index}" onclick="seleccionar(${index})">
           <div class="cara superior conteiner">
           <i class="fa-solid fa-question"></i>
           </div>
@@ -89,11 +93,12 @@ function generarTablero() {
     }
   }
   tarjetas.sort(() => Math.random() - 0.5);
+  duracionPartidaInicial = document.getElementById("duracionPartida").value;
   tablero.innerHTML = tarjetas.join(" ");
   tablero.innerHTML =
     tablero.innerHTML +
-    `<br> 
-  <button onclick="cartasRestantes()">Rendirme</button>`;
+    `<br>
+  <button class="bg-white px-4 border-b-2 rounded mt-3" onclick="cartasRestantes()">Rendirme</button>`;
 }
 
 function tiempoPartida() {
@@ -101,6 +106,7 @@ function tiempoPartida() {
   tiempoRestante = document.getElementById("duracionPartida").value;
   document.getElementById("restante").innerHTML = tiempoRestante; //20
   document.getElementById("restante").innerHTML;
+
 }
 
 function opciones() {
@@ -108,6 +114,9 @@ function opciones() {
   document.getElementById("timer").innerHTML = "Tiempo restante: ";
   document.getElementById("aciertos").innerHTML = "Aciertos: ";
   document.getElementById("intentos").innerHTML = "Intento: ";
+  if(duracionPartidaInicial == "libre"){
+      document.getElementById("timer").setAttribute("hidden", true);
+  }
 }
 
 let seleccionadas = [];
@@ -124,6 +133,7 @@ let contarAcierto = document.getElementById("aciertos");
 
 function cartasRestantes() {
   let aciertosMaximos = cantidadCartas / 2;
+  let estado = null;
 
   Math.round(aciertosMaximos * (79 / 100));
 
@@ -133,32 +143,30 @@ function cartasRestantes() {
   } else {
     tFinal = "modo libre";
   }
-  if (aciertosMaximos == aciertos) {
-    alert("¡¡¡EXCELENTE MEMORIA!!! tuviste " + aciertos + " aciertos en " + tFinal);
-  } else if (
-    aciertos >= Math.round(aciertosMaximos * (80 / 100)) &&
-    aciertos <= Math.round(aciertosMaximos * (99 / 100))
-  ) {
-    alert("¡¡¡MUY BUENA MEMORIA!!! tuviste " + aciertos + " aciertos en " + tFinal);
-  } else if (
-    aciertos >= Math.round(aciertosMaximos * (60 / 100)) &&
-    aciertos <= Math.round(aciertosMaximos * (79 / 100))
-  ) {
-    alert(
-      "¡¡¡MUY BUENA MEMORIA ¡¡¡¡Puedes mejorar!!! tuviste " + aciertos + " aciertos en " + tFinal
-    );
-  } else {
-    alert(
-      "¡¡¡Mala Memoria, debes practicar más!!! tuviste " + aciertos + " aciertos en " + tFinal
-    );
-  }
+
+    axios.post("/play",{
+        estado,
+        cantidad_cartas: cantidadCartas,
+        tipo_cartas: tipoCartas,
+        aciertos,
+        tiempo,
+        tiempo_utilizado,
+    })
+        .then(resp=>{
+            console.log(resp);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
 }
 
 function contarTiempo(timer) {
   contarRegresivo = setInterval(() => {
     timer--;
     tiempoBase = timer;
-    timerPartida.innerHTML = `Tiempo restante: ${timer}`;
+    let minutes = Math.floor(tiempoBase / 60);
+    let seconds = tiempoBase - minutes * 60;
+    timerPartida.innerHTML = `Tiempo restante: ${minutes}:${seconds}`;
     if (timer == 0) {
       clearInterval(contarRegresivo); // Cuando el valor llegar cero el contador se detiene
       cartasRestantes();
@@ -205,12 +213,10 @@ function soltar(seleccionadas) {
       contarAcierto.innerHTML = `Aciertos: ${aciertos}`;
     }
 
-    if (aciertos == (cantidadCartas / 2)) {
+    if (aciertos == (cantidadCartas / 2) || movimientos == intentosMaximos ) {
       cartasRestantes();
     }
-    
-    if (movimientos == intentosMaximos) {
-      cartasRestantes();
-    }
+
+
   }, 1000);
 }

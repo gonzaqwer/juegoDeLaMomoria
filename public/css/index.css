@@ -28,10 +28,17 @@ p{
     text-align: center;
 }
 
-.conteiner{
+.conteinerasdsada{
     display: inline-block;
     width: 850px;
     /* border: 1px solid black; */
+}
+
+.conteiner{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
 }
 
 .juego,.juegoEst{
@@ -75,7 +82,7 @@ h2{
     border: 1px solid white;
     border-radius: 8px;
 } */
-/* 
+/*
 .contenedorTarjeta:hover .tarjeta{
     transform: rotateY(180deg)
 } */

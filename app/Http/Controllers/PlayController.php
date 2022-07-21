@@ -36,6 +36,8 @@ class PlayController extends Controller
     public function store(Request $request)
     {
         //
+        dump($request->all());
+        $partida = new Play();
     }
 
     /**

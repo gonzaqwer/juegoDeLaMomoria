@@ -29,7 +29,7 @@
         <!-- Page Heading -->
         {{-- <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                
+
             </div>
         </header> --}}
         <!-- Page Content -->
@@ -37,7 +37,7 @@
             <p>Los juegos de memoria son una excelente actividad para entrenar la memoria ya que, una práctica
                 regular, contribuye a cuidar la salud mental de quien lo práctica</p>
         </div>
-        
+
     </div>
 </body>
 

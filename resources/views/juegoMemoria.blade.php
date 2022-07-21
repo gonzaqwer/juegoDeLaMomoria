@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="{{ asset('js/index.js') }}" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 </head>
 
 <body>
@@ -28,8 +30,8 @@
       <div class="conteiner juego">
         <div id="tablero" class="conteiner" >
             <!-- Tarjeta -->
-            <div id="juegoEst" class="conteiner">
-                <label for="">Seleccione las cartas a utilizar</label>
+            <div id="juegoEst" class="flex flex-col space-y-4">
+                <label class="text-white" for="">Seleccione las cartas a utilizar</label>
                 <select id="cantidadCartas">
                     <option value="8">8</option>
                     <option value="16">16</option>
@@ -37,7 +39,7 @@
                 </select>
                 <br />
 
-                <label for="">Cartas a utilizar</label>
+                <label class="text-white" for="">Cartas a utilizar</label>
                 <select name="" id="tipoCartas">
                     <option value="ajedrez">Ajedrez</option>
                     <option value="animales">Animales</option>
@@ -45,24 +47,24 @@
                 </select>
                 <br />
 
-                <label for="">Duracion de la partida</label>
+                <label class="text-white" for="">Duracion de la partida</label>
                 <select name="" id="duracionPartida">
                     <option value="libre">Libre</option>
-                    <option value="6">5</option>
-                    <option value="30">30</option>
-                    <option value="50">50</option>
+                    <option value="300">5</option>
+                    <option value="600">30</option>
+                    <option value="1200">50</option>
                 </select>
                 <br />
-                <button onclick="generarTablero(), opciones()">empezar</button>
+                <button class="bg-white px-4 border-b-2 rounded mt-3" onclick="generarTablero(), opciones()">Empezar</button>
             </div>
             <!-- Tarjetas -->
 
 
         </div>
 
-        <div id="opciones" class="conteiner">
+        <div id="opciones" class="grid text-white">
             <h1 id="estadisticas"></h1>
-            <h2 id="restante" hidden></h2>
+            <h2 id="restante"  hidden></h2>
             <h2 id="cantidad" hidden></h2>
             <h2 id="timer"></h2>
             <h2 id="aciertos"></h2>
@@ -73,7 +75,6 @@
 
     </div>
     </div>
-    
-</body>
 
+</body>
 </html>
