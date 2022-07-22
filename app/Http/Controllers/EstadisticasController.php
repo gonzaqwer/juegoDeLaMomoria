@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PlayRequest;
 use App\Models\Play;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class PlayController extends Controller
+class EstadisticasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,9 @@ class PlayController extends Controller
      */
     public function index()
     {
-        // $plays = Play::get();
-        // echo view('juegoMemoria', compact('plays'));
+        $plays = Play::orderBy('aciertos', 'desc')->paginate(5);
+        echo view('estadisticas', compact('plays'));
+        
     }
 
     /**
@@ -36,30 +36,18 @@ class PlayController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PlayRequest $request)
+    public function store(Request $request)
     {
         //
-        // dump($request->all());
-        // $partida = new Play();
-        // $partida->user_id = Auth::user();
-        // $partida::create($request->validated());
-        // dump($request->all() + ['user_id' => auth()->id()]);
-        
-        // dump($request->all() + ['user_id' => auth()->id()]);
-
-        Play::create($request->all() + ['user_id' => auth()->id()]);
-        // $request->user_id = Auth::id();
-        // Play::create($request->validated());
-        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Play  $play
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Play $play)
+    public function show($id)
     {
         //
     }
@@ -67,10 +55,10 @@ class PlayController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Play  $play
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Play $play)
+    public function edit($id)
     {
         //
     }
@@ -79,10 +67,10 @@ class PlayController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Play  $play
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Play $play)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -90,10 +78,10 @@ class PlayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Play  $play
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Play $play)
+    public function destroy($id)
     {
         //
     }

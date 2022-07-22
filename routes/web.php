@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\PlayController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,13 +19,18 @@ Route::get('/', function () {
     return view('juego');
 })->middleware(['auth'])->name('dashboard');
 
+Route::group(['prefix'=>'inicio'], function(){
+    Route::resource('/play', PlayController::class);
+});
+
 Route::get('/registro', function () {
     return view('auth.register');
 })->name('creaCuenta');
 
-Route::get('/estadisticas', function () {
-    return view('estadisticas');
-})->name('estadisticas');
+Route::resource('/estadisticas', EstadisticasController::class);
+// Route::get('/estadisticas', function () {
+//     return view('estadisticas');
+// })->name('estadisticas');
 
 Route::get('/juegoMemoria', function () {
     return view('juegoMemoria');

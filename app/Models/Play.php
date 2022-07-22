@@ -17,5 +17,11 @@ class Play extends Model
             'tipo_cartas',
             'tiempo_utilizado',
             'intentos',
+            'user_id'
     ];
+
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

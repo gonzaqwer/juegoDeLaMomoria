@@ -4,6 +4,10 @@ let tiempoRestante = 0;
 let intentosMaximos = 0;
 let movimientos = 0;
 let cantidadCartas = 0;
+let tiempo_utilizado = 0;
+let minutes = 0;
+let seconds = 0;
+let estado = 'perdio';
 
 let duracionPartidaInicial = null;
 let tipoCartas = null;
@@ -98,7 +102,7 @@ function generarTablero() {
   tablero.innerHTML =
     tablero.innerHTML +
     `<br>
-  <button class="bg-white px-4 border-b-2 rounded mt-3" onclick="cartasRestantes()">Rendirme</button>`;
+  <button class="bg-white px-4 border-b-2 rounded mt-3" onclick="cartasRestantes(), rendirme()">Rendirme</button>`;
 }
 
 function tiempoPartida() {
@@ -131,21 +135,37 @@ let contarRegresivo = null;
 let contarIntento = document.getElementById("intentos");
 let contarAcierto = document.getElementById("aciertos");
 
+function rendirme(){
+  estado = 'abandono';
+}
+
+aciertos*(99/100)
+aciertos*(80/100)
+function msj(){
+  cantidadCartas = cantidadCartas / 2;
+  if (aciertos == (cantidadCartas)) {
+    msj = "¡¡¡EXCELENTE MEMORIA!!!";
+  } else if ((aciertos <= cantidadCartas*(99/100)) && (aciertos >= cantidadCartas*(80/100))) {
+    msj = "¡¡¡MUY BUENA MEMORIA!!!";
+  } else if((aciertos <= cantidadCartas*(79/100)) && (aciertos >= cantidadCartas*(60/100))) {
+    msj = "¡¡¡BUENA MEMORIA!!! ¡¡¡Puedes mejorar!!!";
+  }else {
+    msj = "Mala Memoria, debes practicar mas";
+  }
+  return msj;
+}
+
 function cartasRestantes() {
   let aciertosMaximos = cantidadCartas / 2;
-  let estado = 'gano';
-  let tiempo = 'asd';
-  let tiempo_utilizado = 'asd';
+  let tiempo = minutes+"."+seconds;
+  tiempo_utilizado = tiempoRestante - tiempoBase;
   let dificultad = 'asd';
+  if (aciertos == (cantidadCartas / 2)) {
+    estado = "gano";
+  }
+
 
   Math.round(aciertosMaximos * (79 / 100));
-
-  if (tiempoRestante != "libre") {
-    tFinal = tiempoRestante - tiempoBase;
-    tFinal = tFinal + " segundos";
-  } else {
-    tFinal = "modo libre";
-  }
 
     axios.post("/play",{
         estado,
@@ -155,7 +175,7 @@ function cartasRestantes() {
         cantidad_cartas: cantidadCartas,
         tipo_cartas: tipoCartas,
         tiempo_utilizado,
-        intentos,
+        intentos:movimientos,
     })
         .then(resp=>{
             console.log(resp);
@@ -163,14 +183,40 @@ function cartasRestantes() {
         .catch(err=>{
             console.log(err);
         })
+
+
+        if (tiempoRestante != "libre") {
+          minutes = Math.floor(tiempo_utilizado / 60);
+          seconds = tiempo_utilizado - minutes * 60;
+          tfinal = minutes+"."+seconds;
+          if (parseInt(tfinal) <= 0.59) {
+            tfinal = minutes+"."+seconds+" segundos";
+          } else {
+            tfinal = minutes+"."+seconds+" minutos";
+          }
+        } else {
+          tfinal= 'modo libre'
+        }
+
+        let msjfinal= " ";
+        msjfinal = msj();
+
+        Swal.fire({
+          icon: '',
+          title: msjfinal,
+          text: 'Obtuviste '+ aciertos +' aciertos en '+ tfinal,
+        }).then(function() {
+          window.location = "http://juegodelamemoriafinal.test/juegoMemoria";
+      });
+       
 }
 
 function contarTiempo(timer) {
   contarRegresivo = setInterval(() => {
     timer--;
     tiempoBase = timer;
-    let minutes = Math.floor(tiempoBase / 60);
-    let seconds = tiempoBase - minutes * 60;
+    minutes = Math.floor(tiempoBase / 60);
+    seconds = tiempoBase - minutes * 60;
     timerPartida.innerHTML = `Tiempo restante: ${minutes}:${seconds}`;
     if (timer == 0) {
       clearInterval(contarRegresivo); // Cuando el valor llegar cero el contador se detiene

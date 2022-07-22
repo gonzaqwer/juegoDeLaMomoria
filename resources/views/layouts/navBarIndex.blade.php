@@ -22,7 +22,7 @@
     </div>
     <div>
       <a href="{{route('creaCuenta')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Creá tu cuenta</a>
-      <a href="{{route('estadisticas')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Estadisticas</a>
+      <a href="{{route('estadisticas.index')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Estadisticas</a>
     </div>
   </div>
 </nav>

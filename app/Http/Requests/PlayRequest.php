@@ -30,9 +30,9 @@ class PlayRequest extends FormRequest
             'tiempo'=> 'required',
             'cantidad_cartas'=> 'required',
             'tipo_cartas' => 'required',
-            'tiempo_utilizado'=> 'required',
+            // 'tiempo_utilizado'=> 'required',
             'intentos'=> 'required',
-            'user_id'=>'string'
+            // 'user_id'=>'required'
         ];
     }
 }
